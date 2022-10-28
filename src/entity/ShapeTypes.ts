@@ -1,10 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity } from "typeorm";
+import { GenericEntity } from '../common/GenericEntity';
 
 @Entity()
-export class ShapeType {
-    @PrimaryGeneratedColumn()
-    id: number;
-
+export class ShapeType extends GenericEntity {
     @Column({
         length: 50
     })

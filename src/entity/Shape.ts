@@ -1,11 +1,9 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, Relation } from "typeorm";
 import { ShapeType } from './ShapeTypes';
+import { GenericEntity } from '../common/GenericEntity';
 
 @Entity()
-export class Shape {
-    @PrimaryGeneratedColumn()
-    id: number;
-
+export class Shape extends GenericEntity {
     @Column({
         length: 6
     })
@@ -13,5 +11,5 @@ export class Shape {
 
     @OneToOne(() => ShapeType)
     @JoinColumn()
-    type: ShapeType;
+    type: Relation<ShapeType>;
 }

@@ -1,10 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { GenericEntity } from '../common/GenericEntity';
 
 @Entity()
-export class User {
-    @PrimaryGeneratedColumn()
-    id: number;
-
+export class User extends GenericEntity {
     @Column({
         length: 50
     })

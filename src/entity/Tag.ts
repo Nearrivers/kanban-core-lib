@@ -1,10 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany } from "typeorm";
+import { Project } from './Project';
+import { GenericEntity } from '../common/GenericEntity';
 
 @Entity()
-export class Tag {
-    @PrimaryGeneratedColumn()
-    id: number;
-
+export class Tag extends GenericEntity {
     @Column({
         length: 50
     })
@@ -14,4 +13,8 @@ export class Tag {
         length: 6
     })
     color: string;
+
+    @ManyToMany(() => Project, (project) => project.tags)
+    @JoinTable()
+    projects: Project[];
 }
