@@ -1,35 +1,25 @@
 {
-   "compilerOptions": {
-     "target": "es6",
-     "types": ["node", "jest"],
-     "module": "commonjs",
-     "moduleResolution": "node",
-     "esModuleInterop": true,
-     "lib": ["ES2021"],
-     "allowJs": true,
-     "outDir": "dist",
-     "rootDir": "src",
-     "sourceMap": true,
-     "resolveJsonModule": true,
-     "experimentalDecorators": true,
-     "emitDecoratorMetadata": true,
-   },
-   "include": [
-     "src"
-   ],
-   "exclude": [
-     "node_modules",
-     "**/*.test.ts",
-   ],
-   "typeAcquisition": {
-     "include": [
-       "jest"
-     ]
-   },
-   "jest": {
-     "testEnvironment": "node",
-     "coveragePathIgnorePatterns": [
-       "/node_modules/"
-     ]
-   },
+  "compilerOptions": {
+    "target": "es6",
+    "types": ["node", "jest"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "lib": ["ES2021"],
+    "outDir": "dist",
+    "rootDir": "src",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "**/*.test.ts"],
+  "typeAcquisition": {
+    "include": ["jest"]
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": ["/node_modules/"]
+  }
 }

@@ -1,7 +1,19 @@
 .idea/
-.vscode/
 node_modules/
 build/
 tmp/
 temp/
 .env
+dist/
+
+# Project specific
+kanban
+*.sqlite
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
