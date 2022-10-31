@@ -1,3 +1,6 @@
+import { DataSourceOptions } from 'typeorm/data-source/DataSourceOptions'
+import { initDatabaseConnection } from './data-access'
+import { ErrorHandler } from './globalErrorHandler/errorHandler'
 // import { AppDataSource } from "./data-access/data-source"
 // import { User } from "./entity/User"
 
@@ -19,3 +22,15 @@
 
 export * from './domain'
 export * from './data-access'
+export * from './globalErrorHandler'
+
+export type LibInitOptions = {
+  useBuiltInGlobalErrorHandler: boolean
+  databaseOptions: DataSourceOptions
+}
+
+export function initializeLibrary(options: LibInitOptions) {
+  // init with log4js
+  // if(!options.useBuiltInGlobalErrorHandler) new ErrorHandler()
+  initDatabaseConnection(options.databaseOptions)
+}
