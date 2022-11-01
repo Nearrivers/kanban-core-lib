@@ -5,10 +5,12 @@ tmp/
 temp/
 .env
 dist/
+coverage/
 
 # Project specific
 kanban
 *.sqlite
+mrd*
 
 # Visual Studio Code
 .vscode/*

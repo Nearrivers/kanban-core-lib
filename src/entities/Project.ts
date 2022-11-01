@@ -12,13 +12,16 @@ export class Project extends GenericEntity {
     name: string;
 
     @OneToOne(() => Shape)
+    // JoinColumn indique que la relation est unidirectionnelle
+    // i.E: les projets peuvent obtenir les tags mais pas l'inverse
     @JoinColumn()
     shape: Relation<Shape>;
 
     @ManyToMany(() => Tag, (tag) => tag.projects)
     @JoinTable()
-    tags: Tag[];
+    tags: Relation<Tag[]>;
 
     @OneToMany(() => List, (list) => list.project)
-    lists: List[];
+    @JoinTable()
+    lists: Relation<List[]>;
 }
