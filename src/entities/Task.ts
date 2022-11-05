@@ -11,24 +11,18 @@ export class Task extends GenericEntity {
     })
     name: string;
 
-    @Column("longtext")
+    @Column()
     description: string;
 
-    @CreateDateColumn({
-        type: "timestamp with local time zone",
-        default: () => "CURRENT_TIMESTAMP(6)"
-    })
-    created_at: Date;
+    @CreateDateColumn()
+    created_at: string;
 
     @ManyToOne(() => User, (user) => user.created_tasks)
     @JoinColumn()
     creator: Relation<User>;
 
-    @UpdateDateColumn({
-        type: "timestamp",
-        default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)"
-    })
-    updated_at: Date;
+    @UpdateDateColumn()
+    updated_at: string;
 
     @ManyToOne(() => User, (user) => user.updated_tasks)
     @JoinColumn()
@@ -38,6 +32,30 @@ export class Task extends GenericEntity {
     list: Relation<List>;
 
     @ManyToMany(() => Tag, (tag) => tag.tasks)
-    @JoinTable()
+    @JoinTable({
+        name: "tasks_tags",
+        joinColumn: {
+            name: "task",
+            referencedColumnName: "id"
+        },
+        inverseJoinColumn: {
+            name: "tag",
+            referencedColumnName: "id"
+        }
+    })
     tags?: Relation<Tag[]>;
+
+    @ManyToMany(() => User, (user) => user.assigned_tasks)
+    @JoinTable({
+        name: "tasks_users",
+        joinColumn: {
+            name: "task",
+            referencedColumnName: "id"
+        },
+        inverseJoinColumn: {
+            name: "user",
+            referencedColumnName: "id"
+        }
+    })
+    assigned_users?: Relation<User[]>;
 }
