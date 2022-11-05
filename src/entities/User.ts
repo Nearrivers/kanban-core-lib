@@ -2,12 +2,14 @@ import { Column, Entity, ManyToMany, OneToMany, Relation } from 'typeorm';
 import { GenericEntity } from '../utils/GenericEntity';
 import { Task } from './Task';
 import { Project } from './Project';
+import { IsDefined, IsNotEmpty, Length } from 'class-validator';
 
 @Entity()
 export class User extends GenericEntity {
-    @Column({
-        length: 50
-    })
+    @Column()
+    @Length(50)
+    @IsDefined()
+    @IsNotEmpty()
     name: string;
 
     @OneToMany(() => Task, (task) => task.creator)
