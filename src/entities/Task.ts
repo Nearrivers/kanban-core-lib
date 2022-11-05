@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToOne, Relation, UpdateDateColumn } from "typeorm";
-import { GenericEntity } from '../common/GenericEntity';
+import { GenericEntity } from '../utils/GenericEntity';
 import { List } from './List';
 import { Tag } from "./Tag";
 import { User } from './User';
@@ -32,12 +32,12 @@ export class Task extends GenericEntity {
 
     @ManyToOne(() => User, (user) => user.updated_tasks)
     @JoinColumn()
-    last_updater: Relation<User>;
+    last_updater?: Relation<User>;
 
     @ManyToOne(() => List, (list) => list.tasks)
     list: Relation<List>;
 
     @ManyToMany(() => Tag, (tag) => tag.tasks)
     @JoinTable()
-    tags: Relation<Tag[]>;
+    tags?: Relation<Tag[]>;
 }

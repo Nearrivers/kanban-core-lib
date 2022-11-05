@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, OneToMany, Relation } from "typeorm";
-import { GenericEntity } from "../common/GenericEntity";
+import { GenericEntity } from "../utils/GenericEntity";
 import { Project } from "./Project";
 import { Task } from "./Task";
 
@@ -19,5 +19,5 @@ export class List extends GenericEntity {
     project: Relation<Project>;
 
     @OneToMany(() => Task, (task) => task.list)
-    tasks: Relation<Task[]>;
+    tasks?: Relation<Task[]>;
 }
