@@ -1,4 +1,4 @@
-import { Column, Entity, JoinTable, ManyToMany, Relation } from "typeorm";
+import { Column, Entity, ManyToMany, Relation } from "typeorm";
 import { Project } from './Project';
 import { GenericEntity } from '../utils/GenericEntity';
 import { Task } from './Task';
@@ -10,16 +10,12 @@ export class Tag extends GenericEntity {
     })
     name: string;
 
-    @Column({
-        length: 6
-    })
-    color: string;
+    @Column()
+    color: number;
 
     @ManyToMany(() => Project, (project) => project.tags)
-    @JoinTable()
     projects?: Relation<Project[]>;
 
     @ManyToMany(() => Task, (task) => task.tags)
-    @JoinTable()
     tasks?: Relation<Task[]>;
 }
