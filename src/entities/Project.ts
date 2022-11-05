@@ -2,6 +2,7 @@ import { Column, Entity, Relation, ManyToMany, JoinTable, OneToMany } from 'type
 import { Tag } from './Tag';
 import { GenericEntity } from '../utils/GenericEntity';
 import { List } from './List';
+import { User } from './User';
 
 @Entity()
 export class Project extends GenericEntity {
@@ -14,10 +15,36 @@ export class Project extends GenericEntity {
     color: number;
 
     @ManyToMany(() => Tag, (tag) => tag.projects)
-    @JoinTable()
+    @JoinTable({
+        name: "projects_tags",
+        joinColumn: {
+            name: "project",
+            referencedColumnName: "id"
+        },
+        inverseJoinColumn: {
+            name: "tag",
+            referencedColumnName: "id"
+        }
+    })
     tags?: Relation<Tag[]>;
 
-    @OneToMany(() => List, (list) => list.project)
+    @ManyToMany(() => User, (user) => user.projects)
+    @JoinTable({
+        name: "projects_users",
+        joinColumn: {
+            name: "project",
+            referencedColumnName: "id"
+        },
+        inverseJoinColumn: {
+            name: "user",
+            referencedColumnName: "id"
+        }
+    })
+    users: Relation<User[]>;
+
+    @OneToMany(() => List, (list) => list.project, {
+        cascade: true
+    })
     @JoinTable()
     lists?: Relation<List[]>;
 }
