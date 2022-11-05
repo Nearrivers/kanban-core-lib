@@ -10,14 +10,14 @@ export class List extends GenericEntity {
     })
     name: string;
 
-    @Column({
-        length: 6
-    })
-    color: string;
+    @Column()
+    color: number;
 
     @ManyToOne(() => Project, (project) => project.lists)
     project: Relation<Project>;
 
-    @OneToMany(() => Task, (task) => task.list)
+    @OneToMany(() => Task, (task) => task.list, {
+        cascade: true
+    })
     tasks?: Relation<Task[]>;
 }
