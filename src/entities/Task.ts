@@ -1,3 +1,4 @@
+import { IsDateString, Length } from "class-validator";
 import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToOne, Relation, UpdateDateColumn } from "typeorm";
 import { GenericEntity } from '../utils/GenericEntity';
 import { List } from './List';
@@ -6,15 +7,15 @@ import { User } from './User';
 
 @Entity()
 export class Task extends GenericEntity {
-    @Column({
-        length: 50
-    })
+    @Column()
+    @Length(50)
     name: string;
 
     @Column()
     description: string;
 
     @CreateDateColumn()
+    @IsDateString()
     created_at: string;
 
     @ManyToOne(() => User, (user) => user.created_tasks)
@@ -22,6 +23,7 @@ export class Task extends GenericEntity {
     creator: Relation<User>;
 
     @UpdateDateColumn()
+    @IsDateString()
     updated_at: string;
 
     @ManyToOne(() => User, (user) => user.updated_tasks)
