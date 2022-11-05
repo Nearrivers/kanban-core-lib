@@ -12,8 +12,8 @@ export class List extends GenericEntity {
 
     @Column()
     @IsInt()
-    @Min(0)
-    @Max(16777215)
+    @Min(0x0000000)
+    @Max(0xFFFFFFF)
     color: number;
 
     @ManyToOne(() => Project, (project) => project.lists)
