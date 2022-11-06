@@ -1,5 +1,5 @@
-import { IsDateString, IsDefined, IsNotEmpty, Length } from "class-validator";
-import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToOne, Relation, UpdateDateColumn } from "typeorm";
+import { IsDateString, Length } from "class-validator";
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, Relation, UpdateDateColumn } from "typeorm";
 import { GenericEntity } from '../utils/GenericEntity';
 import { List } from './List';
 import { Tag } from "./Tag";
@@ -8,9 +8,7 @@ import { User } from './User';
 @Entity()
 export class Task extends GenericEntity {
     @Column()
-    @Length(50)
-    @IsDefined()
-    @IsNotEmpty()
+    @Length(1, 50)
     name: string;
 
     @Column()
