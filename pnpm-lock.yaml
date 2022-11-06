@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@rushstack/eslint-patch': ^1.2.0
+  '@types/jest': ^29.2.2
   '@types/node': ^16.11.10
   '@typescript-eslint/eslint-plugin': ^5.41.0
   '@typescript-eslint/parser': 5.0.0
@@ -28,6 +29,7 @@ dependencies:
 
 devDependencies:
   '@rushstack/eslint-patch': 1.2.0
+  '@types/jest': 29.2.2
   '@types/node': 16.18.2
   '@typescript-eslint/eslint-plugin': 5.41.0_5yi3u77ujieplkcs5hek6m6krq
   '@typescript-eslint/parser': 5.0.0_t7ph7dpvh7g5bfovntuojbuu4i
@@ -845,6 +847,13 @@ packages:
     resolution: {integrity: sha512-c3mAZEuK0lvBp8tmuL74XRKn1+y2dcwOUpH7x4WrF6gk1GIgiluDRgMYQtw2OFcBvAJWlt6ASU3tSqxp0Uu0Aw==}
     dependencies:
       '@types/istanbul-lib-report': 3.0.0
+    dev: true
+
+  /@types/jest/29.2.2:
+    resolution: {integrity: sha512-og1wAmdxKoS71K2ZwSVqWPX6OVn3ihZ6ZT2qvZvZQm90lJVDyXIjYcu4Khx2CNIeaFv12rOU/YObOsI3VOkzog==}
+    dependencies:
+      expect: 29.2.2
+      pretty-format: 29.2.1
     dev: true
 
   /@types/json-schema/7.0.11:
