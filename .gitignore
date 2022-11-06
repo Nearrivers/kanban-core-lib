@@ -5,12 +5,13 @@ tmp/
 temp/
 .env
 dist/
-coverage/
+pnpm-lock.yaml
 
 # Project specific
 kanban
 *.sqlite
 mrd*
+coverage
 
 # Visual Studio Code
 .vscode/*

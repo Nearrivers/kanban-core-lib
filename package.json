@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "build": "tsc",
-    "test": "jest --watchAll --verbose --silent"
+    "test": "jest --watchAll --verbose --silent --coverage=true"
   },
   "dependencies": {
     "class-validator": "^0.13.2",
