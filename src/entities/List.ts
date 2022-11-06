@@ -1,8 +1,8 @@
-import { IsInt, Length, Max, Min } from "class-validator";
-import { Column, Entity, ManyToOne, OneToMany, Relation } from "typeorm";
-import { GenericEntity } from "../utils/GenericEntity";
-import { Project } from "./Project";
-import { Task } from "./Task";
+import { IsInt, Length, Max, Min } from 'class-validator';
+import { Column, Entity, ManyToOne, OneToMany, Relation } from 'typeorm';
+import { GenericEntity } from '../utils/GenericEntity';
+import { Project } from './Project';
+import { Task } from './Task';
 
 @Entity()
 export class List extends GenericEntity {
@@ -12,8 +12,8 @@ export class List extends GenericEntity {
 
     @Column()
     @IsInt()
-    @Min(0x0000000)
-    @Max(0xFFFFFFF)
+    @Min(0x00000000)
+    @Max(0xFFFFFFFF)
     color: number;
 
     @ManyToOne(() => Project, (project) => project.lists)

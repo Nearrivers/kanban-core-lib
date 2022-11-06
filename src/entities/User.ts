@@ -7,7 +7,7 @@ import { Length } from 'class-validator';
 @Entity()
 export class User extends GenericEntity {
     @Column()
-    @Length(2, 50)
+    @Length(1, 50)
     name: string;
 
     @OneToMany(() => Task, (task) => task.creator)

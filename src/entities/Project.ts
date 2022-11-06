@@ -13,40 +13,40 @@ export class Project extends GenericEntity {
 
     @Column()
     @IsInt()
-    @Min(0x0000000)
-    @Max(0xFFFFFFF)
+    @Min(0x00000000)
+    @Max(0xFFFFFFFF)
     color: number;
 
     @ManyToMany(() => Tag, (tag) => tag.projects)
     @JoinTable({
-        name: "projects_tags",
+        name: 'projects_tags',
         joinColumn: {
-            name: "project",
-            referencedColumnName: "id"
+            name: 'project',
+            referencedColumnName: 'id'
         },
         inverseJoinColumn: {
-            name: "tag",
-            referencedColumnName: "id"
+            name: 'tag',
+            referencedColumnName: 'id'
         }
     })
     tags?: Relation<Tag[]>;
 
     @ManyToMany(() => User, (user) => user.projects)
     @JoinTable({
-        name: "projects_users",
+        name: 'projects_users',
         joinColumn: {
-            name: "project",
-            referencedColumnName: "id"
+            name: 'project',
+            referencedColumnName: 'id'
         },
         inverseJoinColumn: {
-            name: "user",
-            referencedColumnName: "id"
+            name: 'user',
+            referencedColumnName: 'id'
         }
     })
     users: Relation<User[]>;
 
     @OneToMany(() => List, (list) => list.project, {
-        cascade: ["remove"]
+        cascade: ['remove']
     })
     @JoinTable()
     lists?: Relation<List[]>;

@@ -1,8 +1,8 @@
-import { IsDateString, Length } from "class-validator";
-import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, Relation, UpdateDateColumn } from "typeorm";
+import { IsDateString, Length } from 'class-validator';
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, Relation, UpdateDateColumn } from 'typeorm';
 import { GenericEntity } from '../utils/GenericEntity';
 import { List } from './List';
-import { Tag } from "./Tag";
+import { Tag } from './Tag';
 import { User } from './User';
 
 @Entity()
@@ -35,28 +35,28 @@ export class Task extends GenericEntity {
 
     @ManyToMany(() => Tag, (tag) => tag.tasks)
     @JoinTable({
-        name: "tasks_tags",
+        name: 'tasks_tags',
         joinColumn: {
-            name: "task",
-            referencedColumnName: "id"
+            name: 'task',
+            referencedColumnName: 'id'
         },
         inverseJoinColumn: {
-            name: "tag",
-            referencedColumnName: "id"
+            name: 'tag',
+            referencedColumnName: 'id'
         }
     })
     tags?: Relation<Tag[]>;
 
     @ManyToMany(() => User, (user) => user.assigned_tasks)
     @JoinTable({
-        name: "tasks_users",
+        name: 'tasks_users',
         joinColumn: {
-            name: "task",
-            referencedColumnName: "id"
+            name: 'task',
+            referencedColumnName: 'id'
         },
         inverseJoinColumn: {
-            name: "user",
-            referencedColumnName: "id"
+            name: 'user',
+            referencedColumnName: 'id'
         }
     })
     assigned_users?: Relation<User[]>;

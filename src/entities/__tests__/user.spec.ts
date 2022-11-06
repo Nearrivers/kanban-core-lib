@@ -4,69 +4,76 @@ import { MockConnection } from '../../utils/MockConnection';
 import { User } from '../User';
 
 describe('user entity tests', () => {
-  const mockConnection = new MockConnection();
+  const mockConnection = new MockConnection(User);
   let manager: EntityManager;
 
   beforeAll(async () => {
     manager = await mockConnection.initializeMockDb();
   })
 
-  test('GIVEN I want to create a new user '
-    + 'WHEN I try to insert an user with the correct fields '
-    + 'THEN a new user is created '
-    + 'AND I am able to retrieve it', async () => {
-      const user = new User();
-      user.name = 'Antoine';
+  test(`GIVEN I want to create a new user
+    WHEN I try to insert an user with the correct fields
+    THEN a new user is created
+    AND I am able to retrieve it`, async () => {
+    const user = new User();
+    user.name = 'Antoine';
 
-      await manager.save(user);
+    await manager.save(user);
 
-      const createdUser = await manager.findOne(User, {
-        where: {
-          name: 'Antoine'
-        }
-      });
-
-      expect(createdUser.name).toEqual('Antoine');
-    })
-
-  test('GIVEN I want to create a new user '
-    + 'WHEN I try to insert an user with an undefined name '
-    + 'THEN no user is created', async () => {
-      const user = new User();
-      user.name = undefined;
-
-      const errors = await validate(user);
-
-      if (errors.length > 0) {
-        expect(errors[0].constraints.isLength).toEqual('name must be longer than or equal to 2 characters');
+    const createdUser = await manager.findOne(User, {
+      where: {
+        name: 'Antoine'
       }
-    })
+    });
 
-  test('GIVEN I want to create a new user '
-    + 'WHEN I try to insert an user with an empty name '
-    + 'THEN no user is created', async () => {
-      const user = new User();
-      user.name = '';
+    expect(createdUser).toBeDefined();
+    expect(createdUser.name).toEqual('Antoine');
+  })
 
-      const errors = await validate(user);
+  test(`GIVEN I want to create a new user
+     WHEN I try to insert an user with an undefined name
+     THEN no user is created`, async () => {
+    const user = new User();
+    user.name = undefined;
 
-      if (errors.length > 0) {
-        expect(errors[0].constraints.isLength).toEqual('name must be longer than or equal to 2 characters');
-      }
-    })
+    const errors = await validate(user);
 
-  test('GIVEN I want to create a new user '
-    + 'WHEN I try to insert an user with a name that is too long '
-    + 'THEN no user is created', async () => {
-      const user = new User();
-      user.name = 'ABCCDEFGHIJKLMNOPQRSTUVWXYZABCCDEFGHIJKLMNOPQRSTUVWXYZ';
+    if (!(errors.length > 0)) throw new Error();
 
-      const errors = await validate(user);
+    if (errors.length > 0) {
+      expect(errors[0].constraints.isLength).toEqual('name must be longer than or equal to 2 characters');
+    }
+  })
 
-      if (errors.length > 0) {
-        expect(errors[0].constraints.isLength).toEqual('name must be shorter than or equal to 50 characters');
-      }
-    })
+  test(`GIVEN I want to create a new user
+     WHEN I try to insert an user with an empty name
+     THEN no user is created`, async () => {
+    const user = new User();
+    user.name = '';
+
+    const errors = await validate(user);
+
+    if (!(errors.length > 0)) throw new Error();
+
+    if (errors.length > 0) {
+      expect(errors[0].constraints.isLength).toEqual('name must be longer than or equal to 2 characters');
+    }
+  })
+
+  test(`GIVEN I want to create a new user
+     WHEN I try to insert an user with a name that is too long
+     THEN no user is created`, async () => {
+    const user = new User();
+    user.name = 'a'.repeat(51);
+
+    const errors = await validate(user);
+
+    if (!(errors.length > 0)) throw new Error();
+
+    if (errors.length > 0) {
+      expect(errors[0].constraints.isLength).toEqual('name must be shorter than or equal to 50 characters');
+    }
+  })
 
   afterAll(async () => {
     await mockConnection.tearDown();
