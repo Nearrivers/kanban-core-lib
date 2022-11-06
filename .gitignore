@@ -17,3 +17,5 @@ kanban
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
+
+pnpm-lock.yaml
