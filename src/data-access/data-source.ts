@@ -1,17 +1,20 @@
 import 'reflect-metadata'
-import { DataSource } from 'typeorm'
+import { DataSource, DataSourceOptions } from 'typeorm'
+import { Environments } from '../config/environments.enum'
 // import dotenv from 'dotenv';
 
 // dotenv.config();
-export const AppDataSource = new DataSource({
-  type: 'sqlite',
-  database: process.env.DB_NAME,
-  synchronize: true,
-  logging: false,
-  entities: ["../entities/*ts"],
-  migrations: [],
-  subscribers: [],
-})
+
+export function initDatabaseConnection(options: DataSourceOptions): DataSource {
+  return new DataSource({
+    ...options,
+    synchronize: true,
+    logging: process.env.NODE_ENV === Environments.DEVELOPEMENT,
+    entities: ["../entities/*ts"],
+    migrations: [],
+    subscribers: [],
+  })
+}
 
 export function constructDatabase() {
   // TODO: construct database tables from entities and/or migrations
