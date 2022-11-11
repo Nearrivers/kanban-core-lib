@@ -45,7 +45,7 @@ export class Task extends GenericEntity {
             referencedColumnName: 'id'
         }
     })
-    tags?: Relation<Tag[]>;
+    tags: Relation<Tag[]>;
 
     @ManyToMany(() => User, (user) => user.assigned_tasks)
     @JoinTable({
@@ -59,5 +59,5 @@ export class Task extends GenericEntity {
             referencedColumnName: 'id'
         }
     })
-    assigned_users?: Relation<User[]>;
+    assigned_users: Relation<User[]>;
 }

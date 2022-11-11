@@ -17,8 +17,8 @@ export class Tag extends GenericEntity {
     color: number;
 
     @ManyToMany(() => Project, (project) => project.tags)
-    projects?: Relation<Project[]>;
+    projects: Relation<Project[]>;
 
     @ManyToMany(() => Task, (task) => task.tags)
-    tasks?: Relation<Task[]>;
+    tasks: Relation<Task[]>;
 }

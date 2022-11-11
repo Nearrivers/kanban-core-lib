@@ -22,5 +22,5 @@ export class List extends GenericEntity {
     @OneToMany(() => Task, (task) => task.list, {
         cascade: ['remove']
     })
-    tasks?: Relation<Task[]>;
+    tasks: Relation<Task[]>;
 }

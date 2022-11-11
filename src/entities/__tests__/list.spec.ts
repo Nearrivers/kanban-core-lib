@@ -1,5 +1,6 @@
 import { validate } from 'class-validator';
 import { EntityManager } from 'typeorm';
+import { checkValidation } from '../../utils/CheckValidationUtils';
 import { MockConnection } from '../../utils/MockConnection';
 import { List } from '../List';
 
@@ -38,12 +39,11 @@ describe('list entity tests', () => {
     list.name = undefined;
     list.color = 0x00000000;
 
-    const errors = await validate(list);
-
-    if (!(errors.length > 0)) throw new Error();
-
-    if (errors.length > 0) {
-      expect(errors[0].constraints.isLength).toEqual('name must be longer than or equal to 1 characters');
+    expect.assertions(1);
+    try {
+      await checkValidation(list, 'isLength');
+    } catch (error) {
+      expect(error.message).toEqual('name must be longer than or equal to 1 characters');
     }
   })
 
@@ -54,12 +54,11 @@ describe('list entity tests', () => {
     list.name = '';
     list.color = 0x00000000;
 
-    const errors = await validate(list);
-
-    if (!(errors.length > 0)) throw new Error();
-
-    if (errors.length > 0) {
-      expect(errors[0].constraints.isLength).toEqual('name must be longer than or equal to 1 characters');
+    expect.assertions(1);
+    try {
+      await checkValidation(list, 'isLength');
+    } catch (error) {
+      expect(error.message).toEqual('name must be longer than or equal to 1 characters');
     }
   })
 
@@ -70,13 +69,12 @@ describe('list entity tests', () => {
     list.name = 'a'.repeat(51);
     list.color = 0x00000000;
 
-    const errors = await validate(list);
-
-    if (!(errors.length > 0)) throw new Error();
-
-    if (errors.length > 0) {
-      expect(errors[0].constraints.isLength).toEqual('name must be shorter than or equal to 50 characters');
-    }
+    expect.assertions(1);
+    try {
+      await checkValidation(list, 'isLength');
+    } catch (error) {
+      expect(error.message).toEqual('name must be shorter than or equal to 50 characters');
+    };
   })
 
   test(`GIVEN I want to create a new list
@@ -86,13 +84,12 @@ describe('list entity tests', () => {
     list.name = 'liste2';
     list.color = -1;
 
-    const errors = await validate(list);
-
-    if (!(errors.length > 0)) throw new Error();
-
-    if (errors.length > 0) {
-      expect(errors[0].constraints.min).toEqual('color must not be less than 0');
-    }
+    expect.assertions(1);
+    try {
+      await checkValidation(list, 'min');
+    } catch (error) {
+      expect(error.message).toEqual('color must not be less than 0');
+    };
   })
 
   test(`GIVEN I want to create a new list
@@ -102,16 +99,15 @@ describe('list entity tests', () => {
     list.name = 'liste2';
     list.color = 0xFFFFFFFFF;
 
-    const errors = await validate(list);
-
-    if (!(errors.length > 0)) throw new Error();
-
-    if (errors.length > 0) {
-      expect(errors[0].constraints.max).toEqual('color must not be greater than 4294967295');
-    }
+    expect.assertions(1);
+    try {
+      await checkValidation(list, 'max');
+    } catch (error) {
+      expect(error.message).toEqual('color must not be greater than 4294967295');
+    };
   })
 
-  // afterAll(async () => {
-  //   await mockConnection.tearDown();
-  // })
+  afterAll(async () => {
+    await mockConnection.tearDown();
+  })
 })

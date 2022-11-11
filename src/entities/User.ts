@@ -11,13 +11,13 @@ export class User extends GenericEntity {
     name: string;
 
     @OneToMany(() => Task, (task) => task.creator)
-    created_tasks?: Relation<Task[]>;
+    created_tasks: Relation<Task[]>;
 
     @OneToMany(() => Task, (task) => task.last_updater)
-    updated_tasks?: Relation<Task[]>;
+    updated_tasks: Relation<Task[]>;
 
     @ManyToMany(() => Task, (task) => task.assigned_users)
-    assigned_tasks?: Relation<Task[]>;
+    assigned_tasks: Relation<Task[]>;
 
     @ManyToMany(() => Project, (project) => project.users)
     projects: Relation<Project[]>;

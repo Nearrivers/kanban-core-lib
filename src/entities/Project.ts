@@ -29,7 +29,7 @@ export class Project extends GenericEntity {
             referencedColumnName: 'id'
         }
     })
-    tags?: Relation<Tag[]>;
+    tags: Relation<Tag[]>;
 
     @ManyToMany(() => User, (user) => user.projects)
     @JoinTable({
@@ -49,5 +49,5 @@ export class Project extends GenericEntity {
         cascade: ['remove']
     })
     @JoinTable()
-    lists?: Relation<List[]>;
+    lists: Relation<List[]>;
 }

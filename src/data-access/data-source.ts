@@ -1,19 +1,17 @@
-import 'reflect-metadata'
-import { DataSource, DataSourceOptions } from 'typeorm'
-import { Environments } from '../config/environments.enum'
-// import dotenv from 'dotenv';
+import 'reflect-metadata';
+import { DataSource, DataSourceOptions } from 'typeorm';
 
 // dotenv.config();
 
 export function initDatabaseConnection(options: DataSourceOptions): DataSource {
   return new DataSource({
     ...options,
-    synchronize: true,
-    logging: process.env.NODE_ENV === Environments.DEVELOPEMENT,
+    // synchronize: true,
+    // logging: process.env.NODE_ENV === Environments.DEVELOPEMENT,
     entities: ["../entities/*ts"],
     migrations: [],
     subscribers: [],
-  })
+  });
 }
 
 export function constructDatabase() {

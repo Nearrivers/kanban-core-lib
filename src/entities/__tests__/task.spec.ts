@@ -1,5 +1,6 @@
 import { validate } from 'class-validator';
 import { EntityManager } from 'typeorm';
+import { checkValidation } from '../../utils/CheckValidationUtils';
 import { MockConnection } from '../../utils/MockConnection';
 import { Task } from '../Task';
 
@@ -37,12 +38,11 @@ describe('task entity tests', () => {
     const task = new Task();
     task.name = undefined;
 
-    const errors = await validate(task);
-
-    if (!(errors.length > 0)) throw new Error();
-
-    if (errors.length > 0) {
-      expect(errors[0].constraints.isLength).toEqual('name must be longer than or equal to 1 characters');
+    expect.assertions(1);
+    try {
+      await checkValidation(task, 'isLength');
+    } catch (error) {
+      expect(error.message).toEqual('name must be longer than or equal to 1 characters');
     }
   })
 
@@ -52,12 +52,11 @@ describe('task entity tests', () => {
     const task = new Task();
     task.name = '';
 
-    const errors = await validate(task);
-
-    if (!(errors.length > 0)) throw new Error();
-
-    if (errors.length > 0) {
-      expect(errors[0].constraints.isLength).toEqual('name must be longer than or equal to 1 characters');
+    expect.assertions(1);
+    try {
+      await checkValidation(task, 'isLength');
+    } catch (error) {
+      expect(error.message).toEqual('name must be longer than or equal to 1 characters');
     }
   })
 
@@ -67,16 +66,15 @@ describe('task entity tests', () => {
     const user = new Task();
     user.name = 'a'.repeat(51);
 
-    const errors = await validate(user);
-
-    if (!(errors.length > 0)) throw new Error();
-
-    if (errors.length > 0) {
-      expect(errors[0].constraints.isLength).toEqual('name must be shorter than or equal to 50 characters');
+    expect.assertions(1);
+    try {
+      await checkValidation(user, 'isLength');
+    } catch (error) {
+      expect(error.message).toEqual('name must be shorter than or equal to 50 characters');
     }
   })
 
-  // afterAll(async () => {
-  //   await mockConnection.tearDown();
-  // })
+  afterAll(async () => {
+    await mockConnection.tearDown();
+  })
 })
