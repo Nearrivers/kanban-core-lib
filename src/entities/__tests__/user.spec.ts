@@ -4,7 +4,7 @@ import { MockConnection } from '../../utils/MockConnection';
 import { User } from '../User';
 
 describe('user entity tests', () => {
-  const mockConnection = new MockConnection(User);
+  const mockConnection = new MockConnection();
   let manager: EntityManager;
 
   beforeAll(async () => {
@@ -41,7 +41,7 @@ describe('user entity tests', () => {
     if (!(errors.length > 0)) throw new Error();
 
     if (errors.length > 0) {
-      expect(errors[0].constraints.isLength).toEqual('name must be longer than or equal to 2 characters');
+      expect(errors[0].constraints.isLength).toEqual('name must be longer than or equal to 1 characters');
     }
   })
 
@@ -56,7 +56,7 @@ describe('user entity tests', () => {
     if (!(errors.length > 0)) throw new Error();
 
     if (errors.length > 0) {
-      expect(errors[0].constraints.isLength).toEqual('name must be longer than or equal to 2 characters');
+      expect(errors[0].constraints.isLength).toEqual('name must be longer than or equal to 1 characters');
     }
   })
 
@@ -75,7 +75,7 @@ describe('user entity tests', () => {
     }
   })
 
-  afterAll(async () => {
-    await mockConnection.tearDown();
-  })
+  // afterAll(async () => {
+  //   await mockConnection.tearDown();
+  // })
 })
