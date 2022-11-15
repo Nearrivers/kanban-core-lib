@@ -1,6 +1,5 @@
-import { validate } from 'class-validator';
+import { validateOrReject } from 'class-validator';
 import { EntityManager } from 'typeorm';
-import { checkValidation } from '../../utils/CheckValidationUtils';
 import { MockConnection } from '../../utils/MockConnection';
 import { Task } from '../Task';
 
@@ -37,12 +36,15 @@ describe('task entity tests', () => {
      THEN no task is created`, async () => {
     const task = new Task();
     task.name = undefined;
+    task.created_at = new Date().toISOString();
+    task.updated_at = new Date().toISOString();
 
-    expect.assertions(1);
+    expect.assertions(2);
     try {
-      await checkValidation(task, 'isLength');
-    } catch (error) {
-      expect(error.message).toEqual('name must be longer than or equal to 1 characters');
+      await validateOrReject(task);
+    } catch (errors) {
+      expect(errors).toHaveLength(1);
+      expect(errors[0].constraints.isLength).toEqual('name must be longer than or equal to 1 characters');
     }
   })
 
@@ -52,25 +54,27 @@ describe('task entity tests', () => {
     const task = new Task();
     task.name = '';
 
-    expect.assertions(1);
+    expect.assertions(2);
     try {
-      await checkValidation(task, 'isLength');
-    } catch (error) {
-      expect(error.message).toEqual('name must be longer than or equal to 1 characters');
+      await validateOrReject(task);
+    } catch (errors) {
+      expect(errors).toHaveLength(1);
+      expect(errors[0].constraints.isLength).toEqual('name must be longer than or equal to 1 characters');
     }
   })
 
   test(`GIVEN I want to create a new task
      WHEN I try to insert a task with a name that is too long
      THEN no task is created`, async () => {
-    const user = new Task();
-    user.name = 'a'.repeat(51);
+    const task = new Task();
+    task.name = 'a'.repeat(51);
 
-    expect.assertions(1);
+    expect.assertions(2);
     try {
-      await checkValidation(user, 'isLength');
-    } catch (error) {
-      expect(error.message).toEqual('name must be shorter than or equal to 50 characters');
+      await validateOrReject(task);
+    } catch (errors) {
+      expect(errors).toHaveLength(1);
+      expect(errors[0].constraints.isLength).toEqual('name must be shorter than or equal to 50 characters');
     }
   })
 

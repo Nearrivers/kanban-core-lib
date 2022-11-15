@@ -1,6 +1,5 @@
-import { validate } from 'class-validator';
+import { validateOrReject } from 'class-validator';
 import { EntityManager } from 'typeorm';
-import { checkValidation } from '../../utils/CheckValidationUtils';
 import { MockConnection } from '../../utils/MockConnection';
 import { Project } from '../Project';
 
@@ -39,11 +38,12 @@ describe('project entity tests', () => {
     project.name = undefined;
     project.color = 0x00000000;
 
-    expect.assertions(1);
+    expect.assertions(2);
     try {
-      await checkValidation(project, 'isLength');
-    } catch (error) {
-      expect(error.message).toEqual('name must be longer than or equal to 1 characters');
+      await validateOrReject(project);
+    } catch (errors) {
+      expect(errors).toHaveLength(1);
+      expect(errors[0].constraints.isLength).toEqual('name must be longer than or equal to 1 characters');
     }
   })
 
@@ -54,11 +54,12 @@ describe('project entity tests', () => {
     project.name = '';
     project.color = 0x00000000;
 
-    expect.assertions(1);
+    expect.assertions(2);
     try {
-      await checkValidation(project, 'isLength');
-    } catch (error) {
-      expect(error.message).toEqual('name must be longer than or equal to 1 characters');
+      await validateOrReject(project);
+    } catch (errors) {
+      expect(errors).toHaveLength(1);
+      expect(errors[0].constraints.isLength).toEqual('name must be longer than or equal to 1 characters');
     }
   })
 
@@ -69,11 +70,12 @@ describe('project entity tests', () => {
     project.name = 'a'.repeat(51);
     project.color = 0x00000000;
 
-    expect.assertions(1);
+    expect.assertions(2);
     try {
-      await checkValidation(project, 'isLength');
-    } catch (error) {
-      expect(error.message).toEqual('name must be shorter than or equal to 50 characters');
+      await validateOrReject(project);
+    } catch (errors) {
+      expect(errors).toHaveLength(1);
+      expect(errors[0].constraints.isLength).toEqual('name must be shorter than or equal to 50 characters');
     }
   })
 
@@ -84,11 +86,12 @@ describe('project entity tests', () => {
     project.name = 'project2';
     project.color = -1;
 
-    expect.assertions(1);
+    expect.assertions(2);
     try {
-      await checkValidation(project, 'min');
-    } catch (error) {
-      expect(error.message).toEqual('color must not be less than 0');
+      await validateOrReject(project);
+    } catch (errors) {
+      expect(errors).toHaveLength(1);
+      expect(errors[0].constraints.min).toEqual('color must not be less than 0');
     }
   })
 
@@ -99,11 +102,12 @@ describe('project entity tests', () => {
     project.name = 'project2';
     project.color = 0xFFFFFFFFF;
 
-    expect.assertions(1);
+    expect.assertions(2);
     try {
-      await checkValidation(project, 'max');
-    } catch (error) {
-      expect(error.message).toEqual('color must not be greater than 4294967295');
+      await validateOrReject(project);
+    } catch (errors) {
+      expect(errors).toHaveLength(1);
+      expect(errors[0].constraints.max).toEqual('color must not be greater than 4294967295');
     }
   })
 

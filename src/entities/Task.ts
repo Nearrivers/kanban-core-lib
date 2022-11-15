@@ -15,7 +15,6 @@ export class Task extends GenericEntity {
     description: string;
 
     @CreateDateColumn()
-    @IsDateString()
     created_at: string;
 
     @ManyToOne(() => User, (user) => user.created_tasks)
@@ -23,7 +22,6 @@ export class Task extends GenericEntity {
     creator: Relation<User>;
 
     @UpdateDateColumn()
-    @IsDateString()
     updated_at: string;
 
     @ManyToOne(() => User, (user) => user.updated_tasks)

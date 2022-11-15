@@ -1,6 +1,5 @@
-import { validate } from 'class-validator';
+import { validateOrReject } from 'class-validator';
 import { EntityManager } from 'typeorm';
-import { checkValidation } from '../../utils/CheckValidationUtils';
 import { MockConnection } from '../../utils/MockConnection';
 import { User } from '../User';
 
@@ -37,11 +36,12 @@ describe('user entity tests', () => {
     const user = new User();
     user.name = undefined;
 
-    expect.assertions(1);
+    expect.assertions(2);
     try {
-      await checkValidation(user, 'isLength');
-    } catch (error) {
-      expect(error.message).toEqual('name must be longer than or equal to 1 characters');
+      await validateOrReject(user);
+    } catch (errors) {
+      expect(errors).toHaveLength(1);
+      expect(errors[0].constraints.isLength).toEqual('name must be longer than or equal to 1 characters');
     }
   })
 
@@ -51,11 +51,12 @@ describe('user entity tests', () => {
     const user = new User();
     user.name = '';
 
-    expect.assertions(1);
+    expect.assertions(2);
     try {
-      await checkValidation(user, 'isLength');
-    } catch (error) {
-      expect(error.message).toEqual('name must be longer than or equal to 1 characters');
+      await validateOrReject(user);
+    } catch (errors) {
+      expect(errors).toHaveLength(1);
+      expect(errors[0].constraints.isLength).toEqual('name must be longer than or equal to 1 characters');
     }
   })
 
@@ -65,11 +66,12 @@ describe('user entity tests', () => {
     const user = new User();
     user.name = 'a'.repeat(51);
 
-    expect.assertions(1);
+    expect.assertions(2);
     try {
-      await checkValidation(user, 'isLength');
-    } catch (error) {
-      expect(error.message).toEqual('name must be shorter than or equal to 50 characters');
+      await validateOrReject(user);
+    } catch (errors) {
+      expect(errors).toHaveLength(1);
+      expect(errors[0].constraints.isLength).toEqual('name must be shorter than or equal to 50 characters');
     }
   })
 
