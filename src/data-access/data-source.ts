@@ -1,6 +1,5 @@
-import { DataSource, DataSourceOptions } from 'typeorm'
-// import { User } from "./entity/User"
-// import dotenv from 'dotenv';
+import 'reflect-metadata';
+import { DataSource, DataSourceOptions } from 'typeorm';
 
 // dotenv.config();
 
@@ -9,11 +8,10 @@ export function initDatabaseConnection(options: DataSourceOptions): DataSource {
     ...options,
     // synchronize: true,
     // logging: process.env.NODE_ENV === Environments.DEVELOPEMENT,
-    // TODO: add a glob pattern to read entities
-    // entities: [User],
+    entities: ["../entities/*ts"],
     migrations: [],
     subscribers: [],
-  })
+  });
 }
 
 export function constructDatabase() {

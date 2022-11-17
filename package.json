@@ -5,9 +5,11 @@
   "main": "dist/index.js",
   "scripts": {
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "jest --watchAll --verbose --silent --coverage=true"
   },
   "dependencies": {
+    "class-validator": "^0.13.2",
     "dotenv": "^16.0.3",
     "log4js": "^6.7.0",
     "reflect-metadata": "^0.1.13",
