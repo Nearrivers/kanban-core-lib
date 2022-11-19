@@ -4,7 +4,7 @@ import { validateOrReject } from 'class-validator';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 
 export abstract class GenericService<E extends GenericEntity> {
-  abstract get entity(): EntityTarget<E>;
+  protected abstract get entity(): EntityTarget<E>;
 
   private readonly manager: EntityManager;
 
