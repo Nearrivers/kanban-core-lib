@@ -9,11 +9,11 @@ export abstract class GenericService<E extends GenericEntity> {
   private readonly manager: EntityManager;
 
   async findAll(): Promise<E[]> {
-    return await this.manager.find(this.entity);
+    return await this.manager.find<E>(this.entity);
   }
 
   async get(id: number): Promise<E> {
-    return await this.manager.findOne(this.entity, {
+    return await this.manager.findOne<E>(this.entity, {
       where: {
         id
       }
@@ -23,28 +23,26 @@ export abstract class GenericService<E extends GenericEntity> {
   async create(newRow: E): Promise<E> {
     try {
       await validateOrReject(newRow);
-
       return await this.manager.save(this.entity, newRow);
     } catch (error) {
-      // gestion de l'erreur
+      throw error;
     }
   }
 
   async update(id: number, rowUpdate: QueryDeepPartialEntity<E>): Promise<UpdateResult> {
     try {
       await validateOrReject(rowUpdate);
-
-      return await this.manager.update(this.entity, id, rowUpdate);
+      return await this.manager.update<E>(this.entity, id, rowUpdate);
     } catch (error) {
-      // gestion de l'erreur
+      throw error;
     }
   }
 
   async remove(id: number): Promise<DeleteResult> {
     try {
-      return await this.manager.delete(this.entity, id);
+      return await this.manager.delete<E>(this.entity, id);
     } catch (error) {
-      // gestion de l'erreur
+      throw error;
     }
   }
 }
