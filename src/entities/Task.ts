@@ -1,4 +1,4 @@
-import { IsDateString, Length } from 'class-validator';
+import { Length } from 'class-validator';
 import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, Relation, UpdateDateColumn } from 'typeorm';
 import { GenericEntity } from '../utils/GenericEntity';
 import { List } from './List';
