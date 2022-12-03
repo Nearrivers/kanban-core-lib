@@ -23,19 +23,18 @@ export abstract class GenericService<E extends GenericEntity> {
   }
 
   async get(id: number): Promise<E> {
-    const row = await this.manager.findOne<E>(this.entity, {
+    const row = await this.manager.findOneOrFail<E>(this.entity, {
       where: {
         id
       }
     } as unknown as FindOneOptions<E>);
 
-    if (!row) throw new Error();
-
     return row;
   }
 
   async create(newRow: E): Promise<E> {
-    // Si j'utilise newRow directement perte du Prototype de la classe et donc perte de la validation
+    // Si j'utilise newRow directement perte du Prototype de la classe (Prototype Object obtenu à la place)
+    // et donc perte de la validation
     let row = Object.create(this.validator);
 
     Object.keys(newRow).forEach(key => {
