@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { DataSource, DataSourceOptions } from 'typeorm';
+import { DataSource, DataSourceOptions, EntityManager } from 'typeorm';
 
 // dotenv.config();
 
@@ -14,6 +14,8 @@ export function initDatabaseConnection(options: DataSourceOptions): DataSource {
   });
 }
 
-export function constructDatabase() {
-  // TODO: construct database tables from entities and/or migrations
+export async function constructDatabase(libDataSource: DataSource): Promise<EntityManager> {
+  return await libDataSource.initialize().then(() => {
+    return libDataSource.manager;
+  })
 }
